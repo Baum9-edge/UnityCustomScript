@@ -1,0 +1,18 @@
+#nullable #NULLABLE_FLAG#
+#USING_DIRECTIVE#
+
+namespace #NAMESPACE##FOLDER_PATH#
+{
+    public class #SCRIPTNAME# : EditorWindow
+    {
+        [MenuItem("Window/#SCRIPTNAME#")]
+        public static void Open()
+        {
+            GetWindow<#SCRIPTNAME#>().Show();
+        }
+
+        private void OnGUI()
+        {
+        }
+    }
+}
