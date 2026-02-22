@@ -1,0 +1,200 @@
+root = true
+
+# Markdown ファイル
+[*.md]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+insert_final_newline = true
+
+# JSON ファイル
+[*.json]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+
+# すべてのC#ファイルに適用
+[*.cs]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = false
+
+
+############################################################
+# 中括弧・改行スタイル
+############################################################
+
+# 中括弧の前で改行する (オールマンスタイル)
+csharp_new_line_before_open_brace = all
+
+# LINQクエリ句ごとに改行
+csharp_new_line_between_query_expression_clauses = true
+
+# 単一行ブロックを維持するか
+csharp_preserve_single_line_blocks = true
+
+# 単一行ステートメントを維持するか
+csharp_preserve_single_line_statements = true
+
+############################################################
+# var の使用ルール
+############################################################
+
+# 型が明らかな場合は var を使う
+csharp_style_var_when_type_is_apparent = true:suggestion
+
+# その他のケースでは var を使わない
+csharp_style_var_elsewhere = false:warning
+
+############################################################
+# アクセス修飾子
+############################################################
+
+# アクセス修飾子を必須にする
+dotnet_style_require_accessibility_modifiers = always:warning
+
+############################################################
+# 命名規則
+############################################################
+
+# const 定数は PascalCase
+dotnet_naming_symbols.constants.required_modifiers = const
+dotnet_naming_style.const_pascal.capitalization = pascal_case
+dotnet_naming_rule.constants_should_be_pascal.symbols = constants
+dotnet_naming_rule.constants_should_be_pascal.style = const_pascal
+dotnet_naming_rule.constants_should_be_pascal.severity = warning
+
+# 関数の引数は camelCase
+dotnet_naming_symbols.parameters.applicable_kinds = parameter
+dotnet_naming_style.camel_case.capitalization = camel_case
+dotnet_naming_rule.parameters_should_be_camel.symbols = parameters
+dotnet_naming_rule.parameters_should_be_camel.style = camel_case
+dotnet_naming_rule.parameters_should_be_camel.severity = warning
+
+# 禁止系
+dotnet_naming_style.forbidden_style.capitalization = pascal_case
+dotnet_naming_style.forbidden_style.required_prefix = __forbidden__
+# public フィールドは基本的に禁止（error）
+dotnet_naming_symbols.public_fields.applicable_accessibilities = public
+dotnet_naming_symbols.public_fields.applicable_kinds = field
+dotnet_naming_rule.public_fields_are_forbidden.symbols = public_fields
+dotnet_naming_rule.public_fields_are_forbidden.style = forbidden_style
+dotnet_naming_rule.public_fields_are_forbidden.severity = error
+# Private プロパティは基本的に禁止（error）
+dotnet_naming_symbols.private_properties.applicable_accessibilities = private
+dotnet_naming_symbols.private_properties.applicable_kinds = property
+dotnet_naming_rule.private_properties_are_forbidden.symbols = private_properties
+dotnet_naming_rule.private_properties_are_forbidden.style = forbidden_style
+dotnet_naming_rule.private_properties_are_forbidden.severity = error
+
+
+# private static / private static readonly フィールドは s_ プレフィックス付き PascalCase
+dotnet_naming_symbols.private_static_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_static_fields.required_modifiers = static
+dotnet_naming_symbols.private_static_fields.applicable_kinds = field
+dotnet_naming_style.s_prefix_camel.capitalization = pascal_case
+dotnet_naming_style.s_prefix_camel.required_prefix = s_
+dotnet_naming_rule.private_static_fields_should_be_s_prefix.symbols = private_static_fields
+dotnet_naming_rule.private_static_fields_should_be_s_prefix.style = s_prefix_camel
+dotnet_naming_rule.private_static_fields_should_be_s_prefix.severity = warning
+
+# private フィールドは m_ プレフィックス付き PascalCase
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_style.m_prefix_camel.capitalization = pascal_case
+dotnet_naming_style.m_prefix_camel.required_prefix = m_
+dotnet_naming_rule.private_fields_should_be_m_prefix.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_m_prefix.style = m_prefix_camel
+dotnet_naming_rule.private_fields_should_be_m_prefix.severity = warning
+
+# Public プロパティは PascalCase
+dotnet_naming_symbols.public_properties.applicable_accessibilities = public
+dotnet_naming_symbols.public_properties.applicable_kinds = property
+dotnet_naming_style.public_property_pascal.capitalization = pascal_case
+dotnet_naming_rule.public_properties_should_be_pascal.symbols = public_properties
+dotnet_naming_rule.public_properties_should_be_pascal.style = public_property_pascal
+dotnet_naming_rule.public_properties_should_be_pascal.severity = warning
+
+
+# 関数・構造体・クラス名はアクセス修飾子にかかわらず PascalCase
+dotnet_naming_symbols.types_and_methods.applicable_kinds = class, struct, method
+dotnet_naming_style.types_and_methods_pascal.capitalization = pascal_case
+dotnet_naming_rule.types_and_methods_should_be_pascal.symbols = types_and_methods
+dotnet_naming_rule.types_and_methods_should_be_pascal.style = types_and_methods_pascal
+dotnet_naming_rule.types_and_methods_should_be_pascal.severity = warning
+
+# インタフェースは I + PascalCase
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+dotnet_naming_style.interface_style.capitalization = pascal_case
+dotnet_naming_style.interface_style.required_prefix = I
+dotnet_naming_rule.interfaces_should_be_I_pascal.symbols = interfaces
+dotnet_naming_rule.interfaces_should_be_I_pascal.style = interface_style
+dotnet_naming_rule.interfaces_should_be_I_pascal.severity = warning
+
+# Enum 型名は PascalCase
+dotnet_naming_symbols.enums.applicable_kinds = enum
+dotnet_naming_style.enum_pascal.capitalization = pascal_case
+dotnet_naming_rule.enums_should_be_pascal.symbols = enums
+dotnet_naming_rule.enums_should_be_pascal.style = enum_pascal
+dotnet_naming_rule.enums_should_be_pascal.severity = warning
+
+# Enum メンバーは PascalCase
+dotnet_naming_symbols.enum_members.applicable_kinds = enum_member
+dotnet_naming_style.enum_member_pascal.capitalization = pascal_case
+dotnet_naming_rule.enum_members_should_be_pascal.symbols = enum_members
+dotnet_naming_rule.enum_members_should_be_pascal.style = enum_member_pascal
+dotnet_naming_rule.enum_members_should_be_pascal.severity = warning
+
+# Delegate 名は PascalCase
+dotnet_naming_symbols.delegates.applicable_kinds = delegate
+dotnet_naming_style.delegate_pascal.capitalization = pascal_case
+dotnet_naming_rule.delegates_should_be_pascal.symbols = delegates
+dotnet_naming_rule.delegates_should_be_pascal.style = delegate_pascal
+dotnet_naming_rule.delegates_should_be_pascal.severity = warning
+
+# Event 名は PascalCase
+dotnet_naming_symbols.events.applicable_kinds = event
+dotnet_naming_style.event_pascal.capitalization = pascal_case
+dotnet_naming_rule.events_should_be_pascal.symbols = events
+dotnet_naming_rule.events_should_be_pascal.style = event_pascal
+dotnet_naming_rule.events_should_be_pascal.severity = warning
+
+# Namespace 名は PascalCase
+dotnet_naming_symbols.namespaces.applicable_kinds = namespace
+dotnet_naming_style.namespace_pascal.capitalization = pascal_case
+dotnet_naming_rule.namespaces_should_be_pascal.symbols = namespaces
+dotnet_naming_rule.namespaces_should_be_pascal.style = namespace_pascal
+dotnet_naming_rule.namespaces_should_be_pascal.severity = warning
+
+# Generics 型パラメータは T + PascalCase
+dotnet_naming_symbols.type_parameters.applicable_kinds = type_parameter
+dotnet_naming_style.type_parameter_style.capitalization = pascal_case
+dotnet_naming_style.type_parameter_style.required_prefix = T
+dotnet_naming_rule.type_parameters_should_be_T_pascal.symbols = type_parameters
+dotnet_naming_rule.type_parameters_should_be_T_pascal.style = type_parameter_style
+dotnet_naming_rule.type_parameters_should_be_T_pascal.severity = warning
+
+############################################################
+# その他
+############################################################
+
+# readonly struct を推奨
+csharp_prefer_readonly_struct = true:suggestion
+
+# default(T) より default を推奨
+csharp_prefer_simple_default_expression = true:suggestion
+
+# usingステートメントは簡略構文を推奨
+csharp_prefer_simple_using_statement = true:suggestion
+
+# 文字列補間の簡略化を推奨
+dotnet_style_prefer_simplified_interpolation = true:suggestion
