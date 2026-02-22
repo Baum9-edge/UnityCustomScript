@@ -1,0 +1,18 @@
+{
+    "name": "BaumCustomScript.Ui",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ff4cfa502df330b4e88820a58d5c8baf"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
