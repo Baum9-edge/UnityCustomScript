@@ -27,7 +27,12 @@ namespace BaumCustomTemplate.Utils
             { TemplateType.EditorWindow, "EditorWindow.txt" }
         };
 
-        public static string GetTmplateTextAbsoluteOsPath(LineEnding lineEnding, TemplateType templateType)
+        /// <summary>
+        /// テンプレートファイルの絶対パスをOS標準区切り文字で取得する。
+        /// </summary>
+        /// <param name="templateType"></param>
+        /// <returns></returns>
+        public static string GetTmplateTextOsFullPath(TemplateType templateType)
         {
             string[] guids = AssetDatabase.FindAssets($"t:MonoScript {nameof(TemplateTexts)}");
             string path = AssetDatabase.GUIDToAssetPath(guids[0]);

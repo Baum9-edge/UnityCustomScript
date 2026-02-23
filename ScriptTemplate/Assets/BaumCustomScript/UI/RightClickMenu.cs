@@ -1,4 +1,5 @@
 
+using BaumCustomTemplate.ScriptGeneration;
 using BaumCustomTemplate.Utils;
 using System.IO;
 using UnityEditor;
@@ -35,52 +36,53 @@ namespace BaumCustomTemplate.UI
         [MenuItem("Assets/Create/Script/Interface", false, TopOrder + SeparatorBoundary * 0 + 1)]
         private static void CreateInterface()
         {
-            var folderPath = GetSelectedFolder();
-            CreateScript(folderPath);
+            var scriptOutputDirectory = GetSelectedFolder();
+            CreateScript(scriptOutputDirectory, TemplateType.Interface);
         }
         [MenuItem("Assets/Create/Script/Pure_C#", false, TopOrder + SeparatorBoundary * 0 + 2)]
         private static void CreatePureCSharp()
         {
-            var folderPath = GetSelectedFolder();
-            CreateScript(folderPath);
+            var scriptOutputDirectory = GetSelectedFolder();
+            CreateScript(scriptOutputDirectory, TemplateType.PureCs);
         }
 
         [MenuItem("Assets/Create/Script/MonoBehaviour", false, TopOrder + SeparatorBoundary * 2 + 1)]
         private static void CreateMonoBehaviour()
         {
-            var folderPath = GetSelectedFolder();
-            CreateScript(folderPath);
+            var scriptOutputDirectory = GetSelectedFolder();
+            CreateScript(scriptOutputDirectory, TemplateType.MonoBehaviour);
         }
         [MenuItem("Assets/Create/Script/MonoBehaviour_DetailInspector", false, TopOrder + SeparatorBoundary * 2 + 2)]
         private static void CreateMonoBehaviourDetail()
         {
-            var folderPath = GetSelectedFolder();
-            CreateScript(folderPath);
+            var scriptOutputDirectory = GetSelectedFolder();
+            CreateScript(scriptOutputDirectory, TemplateType.MonoBehaviourDetailInspector);
         }
 
         [MenuItem("Assets/Create/Script/ScriptableObject", false, TopOrder + SeparatorBoundary * 4 + 1)]
         private static void CreateScriptableObject()
         {
-            var folderPath = GetSelectedFolder();
-            CreateScript(folderPath);
+            var scriptOutputDirectory = GetSelectedFolder();
+            CreateScript(scriptOutputDirectory, TemplateType.ScriptableObject);
         }
         [MenuItem("Assets/Create/Script/EditorWindow", false, TopOrder + SeparatorBoundary * 4 + 2)]
         private static void CreateEditorWindow()
         {
-            var folderPath = GetSelectedFolder();
-            CreateScript(folderPath);
+            var scriptOutputDirectory = GetSelectedFolder();
+            CreateScript(scriptOutputDirectory, TemplateType.EditorWindow);
         }
 
-        private static void CreateScript(string folderPath)
+        private static void CreateScript(string scriptOutputDirectory, TemplateType templateType)
         {
-            var path = TemplateTexts.GetTmplateTextAbsoluteOsPath(TemplateTexts.LineEnding.Lf, TemplateTexts.TemplateType.Interface);
-            UnityEngine.Debug.Log($"Selected folder: {folderPath}");
-            UnityEngine.Debug.Log($"Use script: {path}");
-
-            if(System.IO.File.Exists(path))
+            var templateOsFullPath = TemplateTexts.GetTmplateTextOsFullPath(templateType);
+            if (!File.Exists(templateOsFullPath))
             {
-                UnityEngine.Debug.Log("File exists.");
+                UnityEngine.Debug.LogError($"テンプレートファイル {templateOsFullPath} が見つかりません。");
+                return;
             }
+
+            ScriptGenerator.Generate(templateOsFullPath);
+
         }
     }
 }
