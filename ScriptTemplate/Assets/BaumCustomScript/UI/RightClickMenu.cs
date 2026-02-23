@@ -72,17 +72,7 @@ namespace BaumCustomTemplate.UI
             CreateScript(scriptOutputDirectory, TemplateType.EditorWindow);
         }
 
-        private static void CreateScript(string scriptOutputDirectory, TemplateType templateType)
-        {
-            var templateOsFullPath = TemplateTexts.GetTmplateTextOsFullPath(templateType);
-            if (!File.Exists(templateOsFullPath))
-            {
-                UnityEngine.Debug.LogError($"テンプレートファイル {templateOsFullPath} が見つかりません。");
-                return;
-            }
-
-            ScriptGenerator.Generate(templateOsFullPath);
-
-        }
+        private static void GenerateScript(string outputUnityDir, TemplateType templateType)
+            => ScriptGenerator.Generate(outputUnityDir, templateType);
     }
 }
