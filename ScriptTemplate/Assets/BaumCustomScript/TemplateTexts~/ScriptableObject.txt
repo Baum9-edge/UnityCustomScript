@@ -1,9 +1,36 @@
-#nullable #NULLABLE_FLAG#
-#USING_DIRECTIVE#
+#NULLABLE_FLAG##USING_DIRECTIVE#
 
 namespace #NAMESPACE##FOLDER_PATH#
 {
     public class #SCRIPTNAME# : ScriptableObject
     {
+        [MenuItem("ScriptableObject/#SCRIPTNAME#")]
+        private static void SelectInstance() => Selection.activeObject = Select();
+
+        // ScriptableObject の保存先
+        public const string AssetPath = "Assets/ScriptableObject/#SCRIPTNAME#.asset";
+        
+        public static #SCRIPTNAME# Select()
+        {
+            var settings = AssetDatabase.LoadAssetAtPath<#SCRIPTNAME#>(AssetPath);
+            if (settings != null)
+                return settings;
+
+            string folder = System.IO.Path.GetDirectoryName(AssetPath);
+            if (!System.IO.Directory.Exists(folder))
+            {
+                System.IO.Directory.CreateDirectory(folder);
+                AssetDatabase.Refresh();
+            }
+
+            // 新規作成
+            settings = CreateInstance<#SCRIPTNAME#>();
+
+            AssetDatabase.CreateAsset(settings, AssetPath);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            return settings;
+        }
     }
 }

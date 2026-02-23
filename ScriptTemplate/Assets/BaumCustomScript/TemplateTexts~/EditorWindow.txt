@@ -1,18 +1,77 @@
-#nullable #NULLABLE_FLAG#
-#USING_DIRECTIVE#
+#NULLABLE_FLAG##USING_DIRECTIVE#
 
 namespace #NAMESPACE##FOLDER_PATH#
 {
     public class #SCRIPTNAME# : EditorWindow
     {
-        [MenuItem("Window/#SCRIPTNAME#")]
+        [MenuItem("Window/CustomWindos/#SCRIPTNAME#", priority = 1000)]
         public static void Open()
         {
             GetWindow<#SCRIPTNAME#>().Show();
         }
 
+        // 永続データ(実体Assetsと同階層のProjectSettings以下に生成される)
+        [FilePath("ProjectSettings/CustomWindos/#SCRIPTNAME#.asset", FilePathAttribute.Location.ProjectFolder)]
+        private class State : ScriptableSingleton<State>
+        {
+            [SerializeField] private int m_IntValue = 0;
+            [SerializeField] private float m_FloatValue = 1.0f;
+
+            public void SetValue(int i, float f)
+            {
+                m_IntValue = i;
+                m_FloatValue = f;   
+            }
+            
+            public void Save()
+            {
+                Save(true);
+            }
+        }
+
+        private SerializedObject m_State;
+
+        private void OnEnable()
+        {
+            m_State = new SerializedObject(State.instance);
+            minSize = new Vector2(300, 200);
+        }
+
         private void OnGUI()
         {
+            m_State.Update();
+
+            EditorGUILayout.LabelField("#SCRIPTNAME#", EditorStyles.boldLabel);
+            EditorGUILayout.Space();
+
+            SerializedProperty iterator = m_State.GetIterator();
+            iterator.NextVisible(true);
+
+            // Undo 対応の値変更ロジック
+            using (var check = new EditorGUI.ChangeCheckScope())
+            {
+                while (iterator.NextVisible(false))
+                {
+                    EditorGUILayout.PropertyField(iterator.Copy(), true);
+                }
+
+                if (check.changed)
+                {
+                    Undo.RecordObject(State.instance, "Modify #SCRIPTNAME# State");
+                    m_State.ApplyModifiedProperties();
+                    State.instance.Save();
+                }
+            }
+
+            GUILayout.FlexibleSpace();
+
+            if (GUILayout.Button("Reset"))
+            {
+                Undo.RecordObject(State.instance, "Reset #SCRIPTNAME# State");
+                State.instance.SetValue(0, 0f);
+                State.instance.Save();
+                m_State.Update();
+            }
         }
     }
 }

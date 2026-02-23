@@ -1,4 +1,4 @@
-#USING_DIRECTIVE#
+#NULLABLE_FLAG##USING_DIRECTIVE#
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -8,6 +8,10 @@ namespace #NAMESPACE##FOLDER_PATH#
 {
     public class #SCRIPTNAME# : MonoBehaviour
     {
+        private void Awake()
+        {
+        }
+
         private void Start()
         {
         }

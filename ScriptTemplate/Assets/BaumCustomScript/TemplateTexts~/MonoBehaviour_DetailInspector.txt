@@ -1,4 +1,4 @@
-#USING_DIRECTIVE#
+#NULLABLE_FLAG##USING_DIRECTIVE#
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -8,7 +8,11 @@ namespace #NAMESPACE##FOLDER_PATH#
 {
     public class #SCRIPTNAME# : MonoBehaviour
     {
-        [SerializeField] private int sampleValue = 0;
+        [SerializeField] private int m_SampleValue = 0;
+
+        private void Awake()
+        {
+        }
 
         private void Start()
         {
@@ -25,11 +29,11 @@ namespace #NAMESPACE##FOLDER_PATH#
             private #SCRIPTNAME# instance => target as #SCRIPTNAME#;
 
             // SerializedProperty（参照元クラスの変数）
-            private SerializedProperty sampleValueProp;
+            private SerializedProperty m_SampleValueProp;
 
             private void OnEnable()
             {
-                sampleValueProp = serializedObject.FindProperty(nameof(instance.sampleValue));
+                m_SampleValueProp = serializedObject.FindProperty(nameof(instance.m_SampleValue));
             }
 
             public override void OnInspectorGUI()
@@ -53,13 +57,13 @@ namespace #NAMESPACE##FOLDER_PATH#
                 serializedObject.Update();
 
                 // SerializedProperty の描画
-                EditorGUILayout.PropertyField(sampleValueProp);
+                EditorGUILayout.PropertyField(m_SampleValueProp);
 
                 // private フィールドを直接操作する例
                 if (GUILayout.Button("Increase Sample Value"))
                 {
-                    var field = instance.GetType()
-                        .GetField(nameof(instance.sampleValue),
+                    System.Reflection.FieldInfo field = instance.GetType()
+                        .GetField(nameof(instance.m_SampleValue),
                         System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
                     int current = (int)(field?.GetValue(instance) ?? 0);
