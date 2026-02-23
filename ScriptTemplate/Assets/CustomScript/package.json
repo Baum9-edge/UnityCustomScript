@@ -1,0 +1,19 @@
+{
+  "name": "baum9-edge.custom-script",
+  "version": "1.0.0",
+  "displayName": "Custom Script",
+  "description": "Custom C# script templates for Unity.",
+  "unity": "6000.3",
+  "author": {
+    "name": "Baum9-edge"
+  },
+  "keywords": [
+    "script",
+    "template",
+    "editor"
+  ],
+  "license": "MIT",
+  "type": "tool",
+  "documentationUrl": "https://github.com/Baum9-edge/UnityCustomScript/blob/main/README.md",
+  "licensesUrl": "https://github.com/Baum9-edge/UnityCustomScript/blob/main/LICENSE",
+}
