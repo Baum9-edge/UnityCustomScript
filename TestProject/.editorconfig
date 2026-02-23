@@ -86,16 +86,18 @@ dotnet_naming_style.forbidden_style.required_prefix = __forbidden__
 # public フィールドは基本的に禁止（error）
 dotnet_naming_symbols.public_fields.applicable_accessibilities = public
 dotnet_naming_symbols.public_fields.applicable_kinds = field
+dotnet_naming_symbols.public_fields.excluded_modifiers = static, readonly
 dotnet_naming_rule.public_fields_are_forbidden.symbols = public_fields
 dotnet_naming_rule.public_fields_are_forbidden.style = forbidden_style
 dotnet_naming_rule.public_fields_are_forbidden.severity = error
-# Private プロパティは基本的に禁止（error）
-dotnet_naming_symbols.private_properties.applicable_accessibilities = private
-dotnet_naming_symbols.private_properties.applicable_kinds = property
-dotnet_naming_rule.private_properties_are_forbidden.symbols = private_properties
-dotnet_naming_rule.private_properties_are_forbidden.style = forbidden_style
-dotnet_naming_rule.private_properties_are_forbidden.severity = error
-
+# 例外はpublic static readonly
+dotnet_naming_symbols.public_static_readonly_fields.applicable_accessibilities = public
+dotnet_naming_symbols.public_static_readonly_fields.required_modifiers = static, readonly
+dotnet_naming_symbols.public_static_readonly_fields.applicable_kinds = field
+dotnet_naming_style.allow_style.capitalization = pascal_case
+dotnet_naming_rule.public_static_readonly_fields_are_allowed.symbols = public_static_readonly_fields
+dotnet_naming_rule.public_static_readonly_fields_are_allowed.style = allow_style
+dotnet_naming_rule.public_static_readonly_fields_are_allowed.severity = none
 
 # private static / private static readonly フィールドは s_ プレフィックス付き PascalCase
 dotnet_naming_symbols.private_static_fields.applicable_accessibilities = private
