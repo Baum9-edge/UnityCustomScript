@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e53124200b8560a40aadca3a3d4ed045, type: 3}
+  m_Name: Setting
+  m_EditorClassIdentifier: Baum.CustomScript.Editor::BaumCustomTemplate.Settings.TemplateSettings
+  m_UsingForPureCSharp: using System.Collections;
+  m_UsingForMonoBehaviour: 'using UnityEngine;
+
+    using System.Collections;'
+  m_UsingForScriptableObject: 'using UnityEngine;
+
+    using UnityEditor;'
+  m_UsingForEditorWindow: 'using UnityEngine;
+
+    using UnityEditor;'
+  m_NamespaceHeader: TestProject
+  m_NamespaceDepthFromScriptFolders: 2
+  m_EnableNullableFlagWithoutMonobehaviour: 1
+  m_LineEnding: 0
