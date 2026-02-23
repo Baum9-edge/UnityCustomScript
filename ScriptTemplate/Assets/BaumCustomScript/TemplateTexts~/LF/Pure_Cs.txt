@@ -1,9 +1,0 @@
-#nullable #NULLABLE_FLAG#
-#USING_DIRECTIVE#
-
-namespace #NAMESPACE##FOLDER_PATH#
-{
-    public class #SCRIPTNAME#
-    {
-    }
-}
