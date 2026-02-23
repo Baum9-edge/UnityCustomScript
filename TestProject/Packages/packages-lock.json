@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "baum9-edge.custom-script": {
+      "version": "https://github.com/Baum9-edge/UnityCustomScript.git?path=ScriptTemplate/Assets/CustomScript",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8132393835f442770cd2c60c2861edc9489c828a"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.4",
       "depth": 0,
