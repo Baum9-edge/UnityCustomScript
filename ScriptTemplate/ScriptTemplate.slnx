@@ -1,5 +1,4 @@
 ﻿<Solution>
   <Project Path="BaumCustomScript.csproj" />
   <Project Path="BaumCustomScript.Ui.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
 </Solution>
