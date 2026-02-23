@@ -15,7 +15,7 @@ URL： `https://github.com/Baum9-edge/UnityCustomScript.git?path=ScriptTemplate/
 
 ### 1. メニュー > Baum > Custom Template > SelectSettingsより設定ファイルを生成します。
 
-設定を変更してください。
+Assets/Baum/CustomScripts/Setting.assetを変更してください。
 ![alt text](images/1771833809617.png)
 
 設定と実際に生成されるスクリプト例は下記のとおりです。
@@ -30,6 +30,7 @@ URL： `https://github.com/Baum9-edge/UnityCustomScript.git?path=ScriptTemplate/
 ![alt text](images/1771833814910.png)
 
 ### 2. Projectウィンドウを右クリック > Script よりテンプレートを選択します。
+※ 手順1をスキップした場合、デフォルト設定で設定ファイルが作成されます。
 
 ![alt text](images/1771834380916.png)
 
