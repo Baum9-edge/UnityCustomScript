@@ -14,14 +14,6 @@ namespace BaumCustomTemplate.ScriptGeneration
 {
     public static class TemplateCustomizer
     {
-        public static void ChangeEndOfLine(LineEnding ending, StringBuilder templateText)
-        {
-            if (ending == LineEnding.CrLf)
-            {
-                templateText.Replace("\n", "\r\n");
-            }
-        }
-
         public static void SetUsingDirective(StringBuilder templateText, TemplateType templateType, TemplateSettings settings)
         {
             string directive = templateType switch

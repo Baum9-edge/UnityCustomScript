@@ -3,7 +3,6 @@ using BaumCustomTemplate.Settings;
 using BaumCustomTemplate.Utils;
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEditor.ProjectWindowCallback;
@@ -14,6 +13,8 @@ namespace BaumCustomTemplate.ScriptGeneration
 {
     public class ScriptGenerator
     {
+        private const int NewAssetInstanceId = 0; // 新規アセットのインスタンスIDは常に0
+
         private static readonly string s_TempPath = Path.Combine(Application.temporaryCachePath,"baumTempScript.txt");
         public static bool Generate(string outputUnityDir, TemplateType templateType)
         {
@@ -26,15 +27,16 @@ namespace BaumCustomTemplate.ScriptGeneration
 
             // テンプレートテキストを読み込み、カスタム設定に従って調整する。
             var templateText = new StringBuilder(File.ReadAllText(templateOsFullPath));
-            CustomizeTemplateWithSettings(templateText, templateType, outputUnityDir);
+            EndNameEditAction endNameEditAction = CustomizeTemplateWithSettings(templateText, templateType, outputUnityDir);
 
             // カスタムテンプレートの調整完了。一時領域にテンプレートファイルを上書き保存
             File.WriteAllText(s_TempPath, templateText.ToString(), Encoding.UTF8);
 
             var icon = EditorGUIUtility.IconContent("cs Script Icon").image as Texture2D;
+
             ProjectWindowUtil.StartNameEditingIfProjectWindowExists(
-                0,
-                ScriptableObject.CreateInstance<CreateLFScript>(),
+                NewAssetInstanceId,
+                endNameEditAction,
                 $"{templateType.ToString()}.cs",
                 icon,
                 s_TempPath
@@ -42,12 +44,9 @@ namespace BaumCustomTemplate.ScriptGeneration
             return true;
         }
 
-        private static void CustomizeTemplateWithSettings(StringBuilder templateText, TemplateType templateType, string outputUnityDir)
+        private static EndNameEditAction CustomizeTemplateWithSettings(StringBuilder templateText, TemplateType templateType, string outputUnityDir)
         {
             var generateSettings = TemplateSettings.Select();
-
-            // 改行コードの変換が必要なら変換実行
-            TemplateCustomizer.ChangeEndOfLine(generateSettings.LineEnding, templateText);
 
             // カスタムテンプレートのusingディレクティブを置換
             TemplateCustomizer.SetUsingDirective(templateText, templateType, generateSettings);
@@ -56,18 +55,18 @@ namespace BaumCustomTemplate.ScriptGeneration
             // 名前空間を設定
             TemplateCustomizer.SetNamespaceHeader(templateText, templateType, generateSettings);
             TemplateCustomizer.AppendSubnamespaces(templateText, outputUnityDir, generateSettings);
-        }       
-    }
 
-    public class CreateLFScript : EndNameEditAction
-    {
-        public override void Action(int instanceId, string pathName, string resourceFile)
+            // 改行コードに応じたEndNameEditActionを返す
+            return generateSettings.LineEnding switch
+            {
+                LineEnding.Lf => ScriptableObject.CreateInstance<CreateLFScript>(),
+                LineEnding.CrLf => ScriptableObject.CreateInstance<CreateCRLFScript>(),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        public static void WriteUnityScript(int instanceId, string pathName, string text)
         {
-            // テンプレート読み込み（LF に統一）
-            var text = File.ReadAllText(resourceFile)
-                .Replace("\r\n", "\n")
-                .Replace("\r", "\n");
-
             // クラス名を置換
             var className = Path.GetFileNameWithoutExtension(pathName);
             text = text.Replace("#SCRIPTNAME#", className);
@@ -81,4 +80,30 @@ namespace BaumCustomTemplate.ScriptGeneration
         }
     }
 
+    public class CreateLFScript : EndNameEditAction
+    {
+        public override void Action(int instanceId, string pathName, string resourceFile)
+        {
+            // テンプレート読み込み（LF に統一）
+            var text = File.ReadAllText(resourceFile)
+                .Replace("\r\n", "\n")
+                .Replace("\r", "\n");
+
+            ScriptGenerator.WriteUnityScript(instanceId, pathName, text);
+        }
+    }
+
+    public class CreateCRLFScript : EndNameEditAction
+    {
+        public override void Action(int instanceId, string pathName, string resourceFile)
+        {
+            // テンプレート読み込み（CRLF に統一）
+            var text = File.ReadAllText(resourceFile)
+                .Replace("\r\n", "\n")
+                .Replace("\r", "\n")
+                .Replace("\n", "\r\n");
+
+            ScriptGenerator.WriteUnityScript(instanceId, pathName, text);
+        }
+    }
 }
