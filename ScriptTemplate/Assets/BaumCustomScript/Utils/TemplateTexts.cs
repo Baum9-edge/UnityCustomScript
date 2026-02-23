@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Connect;
 using UnityEngine;
@@ -16,16 +17,6 @@ namespace BaumCustomTemplate.Utils
     {
         private const string RelativeTemplateTextsPath = "../TemplateTexts~";
 
-        private const string Lf = "LF";
-        private const string CrLf = "CRLF";
-
-        private const string Interface = "Interface.txt";
-        private const string PureCs = "Pure_Cs.txt";
-        private const string MonoBehaviour = "MonoBehaviour.txt";
-        private const string MonoBehaviourDetailInspector = "MonoBehaviour_DetailInspector.txt";
-        private const string ScriptableObject = "ScriptableObject.txt";
-        private const string EditorWindow = "EditorWindow.txt";
-
         public enum LineEnding
         {
             Lf,
@@ -42,13 +33,23 @@ namespace BaumCustomTemplate.Utils
             EditorWindow
         }
 
+        private readonly static Dictionary<TemplateType, string> TemplateTypeToFileName = new Dictionary<TemplateType, string>
+        {
+            { TemplateType.Interface, "Interface.txt" },
+            { TemplateType.PureCs, "Pure_Cs.txt" },
+            { TemplateType.MonoBehaviour, "MonoBehaviour.txt" },
+            { TemplateType.MonoBehaviourDetailInspector, "MonoBehaviour_DetailInspector.txt" },
+            { TemplateType.ScriptableObject, "ScriptableObject.txt" },
+            { TemplateType.EditorWindow, "EditorWindow.txt" }
+        };
+
         public static string GetTmplateTextAbsoluteOsPath(LineEnding lineEnding, TemplateType templateType)
         {
             string[] guids = AssetDatabase.FindAssets($"t:MonoScript {nameof(TemplateTexts)}");
             string path = AssetDatabase.GUIDToAssetPath(guids[0]);
             string folder = System.IO.Path.GetDirectoryName(path);
 
-            var scriptTextPath = System.IO.Path.Combine(folder, RelativeTemplateTextsPath, Lf, Interface);
+            var scriptTextPath = System.IO.Path.Combine(folder, RelativeTemplateTextsPath, TemplateTypeToFileName[templateType]);
 
             // この時点のパスは区切り文字に\/混在のため、OS標準区切り文字の絶対パスに変換。
             var unityPath = scriptTextPath.Replace('\\', '/');
