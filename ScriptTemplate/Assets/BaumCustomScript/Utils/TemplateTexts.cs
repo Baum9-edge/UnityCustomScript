@@ -17,22 +17,6 @@ namespace BaumCustomTemplate.Utils
     {
         private const string RelativeTemplateTextsPath = "../TemplateTexts~";
 
-        public enum LineEnding
-        {
-            Lf,
-            CrLf
-        }
-
-        public enum TemplateType
-        {
-            Interface,
-            PureCs,
-            MonoBehaviour,
-            MonoBehaviourDetailInspector,
-            ScriptableObject,
-            EditorWindow
-        }
-
         private readonly static Dictionary<TemplateType, string> TemplateTypeToFileName = new Dictionary<TemplateType, string>
         {
             { TemplateType.Interface, "Interface.txt" },
@@ -54,9 +38,9 @@ namespace BaumCustomTemplate.Utils
             // この時点のパスは区切り文字に\/混在のため、OS標準区切り文字の絶対パスに変換。
             var unityPath = scriptTextPath.Replace('\\', '/');
             string osPath = unityPath.Replace('/', System.IO.Path.DirectorySeparatorChar);
-            string absoluteOsPath = System.IO.Path.GetFullPath(osPath);
+            string osFullPath = System.IO.Path.GetFullPath(osPath);
 
-            return absoluteOsPath;
+            return osFullPath;
         }
     }
 }
