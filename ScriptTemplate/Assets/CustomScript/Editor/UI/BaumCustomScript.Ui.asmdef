@@ -1,5 +1,5 @@
 {
-    "name": "BaumCustomScript.Ui",
+    "name": "Baum.CustomScript.Editor.UI",
     "rootNamespace": "",
     "references": [
         "GUID:ff4cfa502df330b4e88820a58d5c8baf"
