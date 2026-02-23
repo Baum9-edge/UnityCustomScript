@@ -2,11 +2,15 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using BaumCustomTemplate.Utils;
 
 namespace BaumCustomTemplate.Settings
 {
     public class TemplateSettings : ScriptableObject
     {
+        [MenuItem("Baum/CustomTemplate/SelectSettings")]
+        private static void SelectTemplateSettings() => Selection.activeObject = Select();
+
         // ScriptableObject の保存先
         public const string AssetPath = "Assets/Baum/CustomScripts/Setting.asset";
 
@@ -19,11 +23,14 @@ namespace BaumCustomTemplate.Settings
         [Header("名前空間の先頭部。空の場合はProdctNameを強制適用")]
         [SerializeField] private string m_NamespaceHeader = "";
 
-        [Header("Scriptsより下のディレクトリ構造を名前空間に追加するか")]
-        [SerializeField] private bool m_UseUnderScriptsDirectoryStructureForNamespace = true;
+        [Header("Scriptsより下のディレクトリ構造を深さNまで名前空間に追加する。0:無効, 1:Scripts直下のディレクトリのみ名前空間に反映")]
+        [SerializeField] private int m_NamespaceDepthFromScriptFolders = 0;
 
         [Header("nullableフラグを有効にするか（Monovihaviourはフラグに関係なく無効）")]
-        [SerializeField] private bool m_EnableNullableFlagWithoutMonobehaviour = true;
+        [SerializeField] private bool m_EnableNullableFlagWithoutMonobehaviour = false;
+
+        [Header("ファイルの改行コード")]
+        [SerializeField] private LineEnding m_LineEnding = LineEnding.Lf;
 
 
         // 各設定の外部アクセス用プロパティ
@@ -31,13 +38,14 @@ namespace BaumCustomTemplate.Settings
         public string UsingForMonoBehaviour => m_UsingForMonoBehaviour;
         public string UsingForScriptableObject => m_UsingForScriptableObject;
         public string UsingForEditorWindow => m_UsingForEditorWindow;
-        public bool UseUnderScriptsDirectoryStructureForNamespace => m_UseUnderScriptsDirectoryStructureForNamespace;
-        public bool EnableNullableFlag => m_EnableNullableFlagWithoutMonobehaviour;
         public string NamespaceHeader => m_NamespaceHeader;
+        public int NamespaceDepthFromScriptFolders => m_NamespaceDepthFromScriptFolders;
+        public bool EnableNullableFlag => m_EnableNullableFlagWithoutMonobehaviour;
+        public LineEnding LineEnding => m_LineEnding;
 
         public static TemplateSettings Select()
         {
-            var settings = AssetDatabase.LoadAssetAtPath<TemplateSettings>(AssetPath);
+            TemplateSettings settings = AssetDatabase.LoadAssetAtPath<TemplateSettings>(AssetPath);
             if (settings != null)
                 return settings;
 

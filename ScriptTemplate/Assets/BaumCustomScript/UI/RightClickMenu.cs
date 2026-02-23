@@ -18,7 +18,7 @@ namespace BaumCustomTemplate.UI
         /// <summary>
         /// 右クリックメニューが展開されたときの、選択フォルダパス
         /// </summary>
-        private static string GetSelectedFolder()
+        private static string GetSelectedFolderUnityPath()
         {
             UnityEngine.Object obj = Selection.activeObject;
             string path = AssetDatabase.GetAssetPath(obj);
@@ -36,40 +36,40 @@ namespace BaumCustomTemplate.UI
         [MenuItem("Assets/Create/Script/Interface", false, TopOrder + SeparatorBoundary * 0 + 1)]
         private static void CreateInterface()
         {
-            var scriptOutputDirectory = GetSelectedFolder();
-            CreateScript(scriptOutputDirectory, TemplateType.Interface);
+            var outputUnityDir = GetSelectedFolderUnityPath();
+            GenerateScript(outputUnityDir, TemplateType.Interface);
         }
         [MenuItem("Assets/Create/Script/Pure_C#", false, TopOrder + SeparatorBoundary * 0 + 2)]
         private static void CreatePureCSharp()
         {
-            var scriptOutputDirectory = GetSelectedFolder();
-            CreateScript(scriptOutputDirectory, TemplateType.PureCs);
+            var outputUnityDir = GetSelectedFolderUnityPath();
+            GenerateScript(outputUnityDir, TemplateType.PureCs);
         }
 
         [MenuItem("Assets/Create/Script/MonoBehaviour", false, TopOrder + SeparatorBoundary * 2 + 1)]
         private static void CreateMonoBehaviour()
         {
-            var scriptOutputDirectory = GetSelectedFolder();
-            CreateScript(scriptOutputDirectory, TemplateType.MonoBehaviour);
+            var outputUnityDir = GetSelectedFolderUnityPath();
+            GenerateScript(outputUnityDir, TemplateType.MonoBehaviour);
         }
         [MenuItem("Assets/Create/Script/MonoBehaviour_DetailInspector", false, TopOrder + SeparatorBoundary * 2 + 2)]
         private static void CreateMonoBehaviourDetail()
         {
-            var scriptOutputDirectory = GetSelectedFolder();
-            CreateScript(scriptOutputDirectory, TemplateType.MonoBehaviourDetailInspector);
+            var outputUnityDir = GetSelectedFolderUnityPath();
+            GenerateScript(outputUnityDir, TemplateType.MonoBehaviourDetailInspector);
         }
 
         [MenuItem("Assets/Create/Script/ScriptableObject", false, TopOrder + SeparatorBoundary * 4 + 1)]
         private static void CreateScriptableObject()
         {
-            var scriptOutputDirectory = GetSelectedFolder();
-            CreateScript(scriptOutputDirectory, TemplateType.ScriptableObject);
+            var outputUnityDir = GetSelectedFolderUnityPath();
+            GenerateScript(outputUnityDir, TemplateType.ScriptableObject);
         }
         [MenuItem("Assets/Create/Script/EditorWindow", false, TopOrder + SeparatorBoundary * 4 + 2)]
         private static void CreateEditorWindow()
         {
-            var scriptOutputDirectory = GetSelectedFolder();
-            CreateScript(scriptOutputDirectory, TemplateType.EditorWindow);
+            var outputUnityDir = GetSelectedFolderUnityPath();
+            GenerateScript(outputUnityDir, TemplateType.EditorWindow);
         }
 
         private static void GenerateScript(string outputUnityDir, TemplateType templateType)
