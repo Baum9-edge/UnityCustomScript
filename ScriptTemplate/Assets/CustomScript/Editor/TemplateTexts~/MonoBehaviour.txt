@@ -35,6 +35,8 @@ namespace #NAMESPACE##FOLDER_PATH#
 ここにこのクラスの説明を書いておく。",
                     style
                 );
+                
+                base.OnInspectorGUI();
             }
         }
 #endif
